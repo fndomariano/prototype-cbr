@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="/coleta/add/">Adicionar</a>
+
+<table>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Ponto</th>
+			<th>Substância</th>
+			<th>Valor Coletado</th>
+			<th>Ações</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for dado in dados %}
+			<tr>
+				<td>{{dado.id}}</td>
+				<td>{{dado.ponto_monitoramento}}</td>
+				<td>{{dado.substancia}}</td>
+				<td>{{dado.valor_coletado}}</td>
+				<td>
+					<a href="/coleta/edit/{{dado.id}}/">Editar</a>
+					<a href="/coleta/delete/{{dado.id}}/">Excluir</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

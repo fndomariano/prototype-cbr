@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<form action="/regra/pesquisar/" method="get">
+		{% csrf_token %}
+		{{form.as_p}}
+		<p>
+			<button type="submit">Pesquisar</button>
+		</p>
+	</form>
+	
+	{% if resultado %}
+		<b>Solução: </b> {{ resultado.0 }}
+	{% else %}
+		Não foi encontrada nenhuma solução - <a href="/regra/add/">Clique aqui para cadastrar.</a> 
+	{% endif %}
+
+		
+	
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<form action="/rio/edit/{{rio_id}}/" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p>
+			<button type="submit">Salvar</button>
+		</p>
+	</form>
+{% endblock %}
+
+

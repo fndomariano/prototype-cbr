@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<form action="/coleta/add/" method="post">
+		{% csrf_token %}
+		<p>
+			{{ form.data_coleta.label }}
+			{{ form.data_coleta }}
+		</p>
+		<p>
+			{{ form.ponto.label }}
+			{{ form.ponto }}
+		</p>
+		<p>
+			<div class="first">
+				{{ form.substancia.label }} {{ form.substancia }}
+				{{ form.valor_coletado }}	
+			</div>
+
+			<div class="fields">	
+				<div class="ui buttons">
+			    	<a href="#" class="add-substancia">+</a> |
+			    	<a href="#" class="remove-substancia">-</a>
+			    </div>
+		    </div>   
+		</p>
+		<p>
+			<button type="submit">Salvar</button>
+		</p>
+	</form>
+{% endblock %}

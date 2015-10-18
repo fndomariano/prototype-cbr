@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="/ponto/add/">Adicionar</a>
+
+<table>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Latitude</th>
+			<th>Longitude</th>
+			<th>Rio</th>
+			<th>Ações</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for ponto in dados %}
+			<tr>
+				<td>{{ponto.id}}</td>
+				<td>{{ponto.latitude}}</td>
+				<td>{{ponto.longitude}}</td>
+				<td>{{ponto.rio}}</td>
+				<td>
+					<a href="/ponto/edit/{{ponto.id}}/">Editar</a>
+					<a href="/ponto/delete/{{ponto.id}}/">Excluir</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="/rio/add/">Adicionar</a>
+
+<table>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Nome</th>
+			<th>Dimensão</th>
+			<th>Bacia Hidrográfica</th>
+			<th>Ações</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for rio in dados %}
+			<tr>
+				<td>{{rio.id}}</td>
+				<td>{{rio.nome}}</td>
+				<td>{{rio.dimensao}}</td>
+				<td>{{rio.bacia_hidrografica}}</td>
+				<td>
+					<a href="/rio/edit/{{rio.id}}/">Editar</a>
+					<a href="/rio/delete/{{rio.id}}/">Excluir</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

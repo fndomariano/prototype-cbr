@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<a href="/bacia-hidrografica/add/">Adicionar</a>
+	<table>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Nome</th>
+				<th>Ações</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for bh in dados %}
+				<tr>
+					<td>{{bh.id}}</td>
+					<td>{{bh.nome}}</td>
+					<td>
+						<a href="/bacia-hidrografica/edit/{{bh.id}}">Editar</a>
+						<a href="/bacia-hidrografica/delete/{{bh.id}}">Excluir</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Protótipo - RBC</title>
+</head>
+<body>
+	<nav>
+		<a href="/">Home</a> |
+	    <a href="/bacia-hidrografica">Bacia Hidrográfica</a> |
+	    <a href="/rio">Rios</a> |
+	    <a href="/ponto">Pontos</a> |
+	    <a href="/substancia">Substâncias</a> |
+	    <a href="/coleta">Coletas</a> |
+	    <a href="/entorno">Entorno</a> |
+	    <a href="/regra">Regra</a> |
+	</nav>
+	
+	<section>
+		{% block content %}
+			
+		{% endblock %}
+	</section>
+
+	<footer>
+		Desenvolvido por Fernando Mariano - Turma: BSI - 8 
+	</footer>
+	<script src="{% static "js/jquery-2.1.1.min.js" %}"></script>
+	<script src="{% static "js/prototipo.js" %}"></script>
+</body>
+</html>

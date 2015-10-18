@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="/regra/add/">Adicionar</a> - <a href="/regra/pesquisar/">Pesquisar Solução</a>
+
+<table>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Classificação IAP</th>
+			<th>Classificação IVA</th>
+			<th>Entorno</th>
+			<th>Risco</th>
+			<th>Ações</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for dado in dados %}
+			<tr>
+				<td>{{dado.id}}</td>
+				<td>{{dado.monitoramento.classificacao_iap}}</td>
+				<td>{{dado.monitoramento.classificacao_iva}}</td>
+				<td>{{dado.entorno}}</td>
+				<td>
+					{% if dado.risco == 'A' %}
+						Alto
+					{% else %}
+						{% if dado.risco == 'M' %}
+							Médio
+						{% else %}
+							Baixo
+						{% endif %}
+					{% endif %}
+				</td>
+				<td>
+					<a href="/regra/edit/{{dado.id}}/">Editar</a>
+					<a href="/regra/delete/{{dado.id}}/">Excluir</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

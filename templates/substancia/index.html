@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="/substancia/add/">Adicionar</a>
+
+<table>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Nome</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for dado in dados %}
+			<tr>
+				<td>{{dado.id}}</td>
+				<td>{{dado.nome}}</td>
+				<td>
+					<a href="/substancia/edit/{{dado.id}}/">Editar</a>
+					<a href="/substancia/delete/{{dado.id}}/">Excluir</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}
