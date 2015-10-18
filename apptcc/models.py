@@ -89,6 +89,22 @@ class Monitoramento(models.Model):
 			'residuo_total': self._get_residuo_total(self._get_valor_coletado_substancia('Resíduo Total'))
 		}
 
+	def _get_valores_st_ipcma(self):
+		return {
+			'cadmio': self._get_valor_coletado_substancia('Cádmio'),
+			'cromo': self._get_valor_coletado_substancia('Cromo Total'),
+			'cobre_dissolvido': self._get_valor_coletado_substancia('Cobre Dissolvido'),
+			'chumbo': self._get_valor_coletado_substancia('Chumbo'),
+			'mercurio': self._get_valor_coletado_substancia('Mercúrio'),
+			'niquel': self._get_valor_coletado_substancia('Niquel'),
+			'fenois_totais': self._get_valor_coletado_substancia('Fenóis Totais'),
+			'surfactantes': self._get_valor_coletado_substancia('Surfactantes'),
+			'zinco': self._get_valor_coletado_substancia('Zinco')
+		}
+
+	def _get_valores_iet(self):
+
+
 	def _get_valores_st_isto(self):
 		return {
 			'pfhtm': self._get_valor_coletado_substancia('PFHTM'),
@@ -109,6 +125,12 @@ class Monitoramento(models.Model):
 			'zinco': self._get_valor_coletado_substancia('Zinco')
 		}
 
+	def _get_valores_iet(self):
+		return {
+			'fosforo': self._get_valor_coletado_substancia('Fósforo Total'),
+			'clorofila': self._get_valor_coletado_substancia('Clorofila'),
+		}
+
 	def _get_multipliacao_minimos_st(self):
 		st = self._get_valores_st_isto()
 		minimo1 = min(st.values())
@@ -119,6 +141,8 @@ class Monitoramento(models.Model):
 	
 	def _get_avg_so(self):
 		so = self._get_valores_so_isto()
+		so = so.values()
+		return float(sum(so)) / len(so)
 	
 	def _get_od(self, oxigenio_dissolvido):
 		if oxigenio_dissolvido > 140:
@@ -176,6 +200,7 @@ class Monitoramento(models.Model):
 		else:
 			return (80.26 * math.exp(-0.00107 * rt + 0.03009 * math.pow(rt, 0.5)) - 0.1185 * rt);
 
+
 	def _calcula_iqa(self):
 		valores_iqa = self._get_valores_iqa()
 		calculo = math.pow(valores_iqa['oxigenio_dissolvido'], 0.17)
@@ -190,8 +215,19 @@ class Monitoramento(models.Model):
 		return calculo
 
 	def _calcula_isto(self):
-		return 0.9
+		return self._get_multipliacao_minimos_st() * self._get_so_isto()
 
+	def _calcula_ipcma(self):
+		return 2
+
+	def _calcula_iet(self):
+		valores_iet = self._get_valores_iet()
+		iet_cl = 10 * (6 - ((-0.7 - 0.6 * math.log(valores_iet['clorofila'])) / math.log(2))) - 20
+		iet_ptt = 10 * (6 - ((-0.42 - 0.36 * math.log(valores_iet['fosforo'])) / math.log(2))) - 20
+		return iet_pt + iet_cl
+
+	def _calcula_iva(self):
+		return (1.2 * self._calcula_ipcma()) + self._calcula_iet()
 
 	def get_classificacao_iap(self):
 		valor_iap = self._calcula_iqa() * self._calcula_isto()
@@ -207,8 +243,8 @@ class Monitoramento(models.Model):
 		else:
 			return "otima"
 
-	def get_classificacao_iap(self):
-		valor_iva = random.randint(1, 7)
+	def get_classificacao_iva(self):
+		valor_iva = self._calcula_iva()
 		
 		if valor_iva <= 2.5: 
 			return "otima"
