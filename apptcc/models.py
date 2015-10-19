@@ -89,7 +89,7 @@ class Monitoramento(models.Model):
 			'residuo_total': self._get_residuo_total(self._get_valor_coletado_substancia('Resíduo Total'))
 		}
 
-	def _get_valores_st_ipcma(self):
+	def _get_valores_st_ipmca(self):
 		return {
 			'cadmio': self._get_valor_coletado_substancia('Cádmio'),
 			'cromo': self._get_valor_coletado_substancia('Cromo Total'),
@@ -102,8 +102,71 @@ class Monitoramento(models.Model):
 			'zinco': self._get_valor_coletado_substancia('Zinco')
 		}
 
-	def _get_valores_iet(self):
+	def _get_valores_ipmca_ve(self):
+		return {
+			'od': self._get_valor_coletado_substancia('Oxigênio Dissolvido'),
+			'ph': self._get_valor_coletado_substancia('Potencial Hidrogênico - pH')
+		}
 
+	def _get_ponderacao_ipmca_od(self):
+		substancia = self._get_valores_ipmca_ve()
+		
+		if substancia['od'] >= 5:
+			print 1
+		elif substancia['od'] >= 3 and substancia['od'] < 5:
+			print 2
+		else:
+			print 3
+
+	def _get_ponderacao_ipmca_cadmio(self):
+		pass
+
+	def _get_ponderacao_ipmca_cromo(self):
+		pass
+
+	def __get_ponderacao_ipmca_cobre_dissolvido(self):
+		pass
+
+	def _get_ponderacao_ipmca_chumbo_total(self):
+		pass
+
+	def _get_ponderacao_ipmca_mercurio(self):
+		pass
+
+	def _get_ponderacao_ipmca_niquel(self):
+		pass
+
+	def _get_ponderacao_ipmca_niquel(self):
+		pass
+
+	def _get_ponderacao_ipmca_fenois_totais(self):
+		pass
+
+	def _get_ponderacao_ipmca_surfactantes(self):
+		pass
+
+	def _get_ponderacao_ipmca_zinco(self):
+		pass
+
+	def _get_ponderecao_ipmca_ph(self):
+		substancia = self._get_valores_ipmca_ve()
+
+		if substancia['ph'] >= 6 and substancia['ph'] <= 9:
+			print 1
+		elif substancia['ph'] > 5 and substancia['ph'] < 6:
+			print 2
+		elif substancia['ph'] > 9 and substancia['ph'] <= 9.5:
+			print 2
+		else:
+			print 3
+
+	def _get_substancia_com_maior_ponderacao(self):
+		substancia = self._get_valores_ipmca_ve()
+		
+		if self._get_ponderecao_ph() > self._get_ponderacao_ipmca_od():
+			return substancia['ph']
+		else:
+			return substancia['od']
 
 	def _get_valores_st_isto(self):
 		return {
@@ -138,7 +201,6 @@ class Monitoramento(models.Model):
 		minimo2.remove(minimo1)
 		return minimo1 * minimo2
 
-	
 	def _get_avg_so(self):
 		so = self._get_valores_so_isto()
 		so = so.values()
@@ -148,13 +210,13 @@ class Monitoramento(models.Model):
 		if oxigenio_dissolvido > 140:
 			return 47.0;
 		else:
-			return (100.8 *  math.exp(math.pow(oxigenio_dissolvido - 106, 2) / -3745))
+			return oxigenio_dissolvido
 
 	def _get_cf(self, cf):
 		if ct > 100000:
 			return 3.0;
 		else:
-			return (98.03 - 36.45 * math.log10(cf) + 3.14 * math.pow(math.log10(cf), 2) + math.pow(math.log10(cf), 3))
+			return cf
 
 	def _get_ph(self, ph):
 		if ph <= 2:
@@ -162,43 +224,43 @@ class Monitoramento(models.Model):
 		elif ph >= 12:
 			return 3.0
 		else:
-			return (0.05421 * (math.pow(ph, 1.23 * ph - 0.09873 * (math.pow(ph, 2)))) + 5.213);
+			return ph
 
 	def _get_dbo(self, dbo):
 		if dbo > 30:
 			return 2.0
 		else:
-			return (102.6 * math.exp(-0.1101 * dbo));
+			return dbo
 
 	def _get_temperatura(self, temperatura):
 		if temperatura > 15:
 			return 9.0
 		else:
-			return (1 / (0.0003869 * math.pow((temperatura + 0.1815), 2) + 0.01081));
+			return temperatura
 
 	def _get_nitrogenio_total(self, nt):
 		if nt > 90:
 			return 1.0
 		else:
-			return (98.96 * (math.pow(nt, -0.2232 + (-0.006457 * nt))));
+			return nt
 
 	def _get_fosforo_total(self, ft):
 		if ft > 10:
 			return 5.0
 		else:
-			return (213.7 * math.exp(-1.68 * (math.pow(ft, 0.3325))));
+			return ft
 
 	def _get_turbidez(self, turbidez):
 		if turbidez > 100:
 			return 5.0
 		else:
-			return (97.34 * math.exp(-0.01139 * turbidez - 0.04917 * math.pow(tur, 0.5)));
+			return turbidez
 
 	def _get_residuo_total(self, rt):
 		if rt > 500:
 			return 30.0
 		else:
-			return (80.26 * math.exp(-0.00107 * rt + 0.03009 * math.pow(rt, 0.5)) - 0.1185 * rt);
+			return rt
 
 
 	def _calcula_iqa(self):
@@ -217,8 +279,10 @@ class Monitoramento(models.Model):
 	def _calcula_isto(self):
 		return self._get_multipliacao_minimos_st() * self._get_so_isto()
 
-	def _calcula_ipcma(self):
-		return 2
+	def _calcula_ipmca(self):
+		ve = self._get_substancia_com_maior_ponderacao()
+		st = self._get_media_tres_maiores_ponderacoes()
+		return ve * st
 
 	def _calcula_iet(self):
 		valores_iet = self._get_valores_iet()
@@ -227,7 +291,7 @@ class Monitoramento(models.Model):
 		return iet_pt + iet_cl
 
 	def _calcula_iva(self):
-		return (1.2 * self._calcula_ipcma()) + self._calcula_iet()
+		return (1.2 * self._calcula_ipmca()) + self._calcula_iet()
 
 	def get_classificacao_iap(self):
 		valor_iap = self._calcula_iqa() * self._calcula_isto()
