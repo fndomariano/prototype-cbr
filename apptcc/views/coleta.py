@@ -26,6 +26,11 @@ def add(request):
 			substancias       = request.POST.getlist('substancia')
 			valores_coletados = request.POST.getlist('valor_coletado')
 
+			monitoramento = Monitoramento()
+			monitoramento.data_monitoramento  = request.POST['data_coleta']
+			monitoramento.ponto_monitoramento = Ponto_Monitoramento.objects.get(pk=request.POST['ponto'])
+			monitoramento.save()
+
 			for i in range(len(substancias)):
 				coleta                     = Coleta()
 				coleta.ponto_monitoramento = Ponto_Monitoramento.objects.get(pk=request.POST['ponto'])
@@ -33,12 +38,10 @@ def add(request):
 				coleta.valor_coletado      = float(valores_coletados[i])
 				coleta.save()
 
-			monitoramento = Monitoramento()
-			monitoramento.data_monitoramento  = request.POST['data_coleta']
-			monitoramento.ponto_monitoramento = Ponto_Monitoramento.objects.get(pk=request.POST['ponto'])
-			# monitoramento.classificacao_iap   = monitoramento.get_classificacao_iap()
-			# monitoramento.classificacao_iva   = monitoramento.get_classificacao_iva()
-			monitoramento.save()
+			calculo = Monitoramento.objects.get(pk=monitoramento.id)
+			calculo.classificacao_iva   = calculo.get_classificacao_iva()
+			calculo.classificacao_iap   = calculo.get_classificacao_iap()
+			calculo.save()
 			
 			return redirect('/coleta/')
 
