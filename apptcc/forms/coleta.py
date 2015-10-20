@@ -20,7 +20,7 @@ class FormColeta(forms.Form):
 
 	substancia = forms.ModelChoiceField(
 		widget = forms.Select(),
-		queryset = Substancia.objects.all(),
+		queryset = Substancia.objects.all().order_by('nome'),
 		empty_label = "Selecione a substancia"
 	)
 

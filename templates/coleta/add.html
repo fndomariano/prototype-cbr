@@ -12,17 +12,18 @@
 			{{ form.ponto }}
 		</p>
 		<p>
-			<div class="first">
-				{{ form.substancia.label }} {{ form.substancia }}
-				{{ form.valor_coletado }}	
-			</div>
-
 			<div class="fields">	
 				<div class="ui buttons">
 			    	<a href="#" class="add-substancia">+</a> |
 			    	<a href="#" class="remove-substancia">-</a>
 			    </div>
 		    </div>   
+
+			
+			<div class="substancia">
+				{{ form.substancia.label }} {{ form.substancia }} {{ form.valor_coletado }}	
+			</div>
+
 		</p>
 		<p>
 			<button type="submit">Salvar</button>

@@ -4,8 +4,8 @@ $(document).ready(function(){
 		
     $('.add-substancia').on('click', function(e){
 		
-		$('.midia').clone().insertAfter('.midia:last');
-		$('.first:last').prop('class', 'field other-substancies');
+		$('.substancia').clone().insertAfter('.substancia:last');
+		$('.substancia:last').prop('class', 'other-substancies');
 		$('.remove-substancia').removeClass('disabled');	
 
 	});
