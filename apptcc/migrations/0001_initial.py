@@ -36,8 +36,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('data_monitoramento', models.DateField(verbose_name=b'Data do Monitoramento')),
-                ('classificacao_iap', models.CharField(max_length=45)),
-                ('classificacao_iva', models.CharField(max_length=45)),
+                ('classificacao_iap', models.CharField(max_length=45, null=True)),
+                ('classificacao_iva', models.CharField(max_length=45, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -52,6 +52,8 @@ class Migration(migrations.Migration):
             name='Regras',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('classificacao_iap', models.CharField(max_length=45)),
+                ('classificacao_iva', models.CharField(max_length=45)),
                 ('risco', models.CharField(max_length=1)),
                 ('solucao_sugerida', models.TextField()),
                 ('entorno', models.ForeignKey(to='apptcc.Entorno')),

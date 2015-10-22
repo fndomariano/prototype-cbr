@@ -1,11 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<form action="/substancia/add/" method="post">
+	<form action="/substancia/add/" class="form-horizontal" role="form" method="post">
 		{% csrf_token %}
-		{{ form.as_p }}
-		<p>
-			<button type="submit">Salvar</button>
-		</p>
+		<div class="form-group">
+			<label for="nome" class="col-sm-2 control-label">Nome: </label>
+			<div class="col-sm-8">
+				{{ form.nome.errors }}
+				{{ form.nome }}
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-3 pull-right">
+				<button type="submit" class="btn btn-info">Salvar</button>
+			</div>
+		</div>
 	</form>
 {% endblock %}

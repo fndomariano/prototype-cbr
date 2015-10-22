@@ -2,9 +2,11 @@
 
 {% block content %}
 
-<a href="/ponto/add/">Adicionar</a>
+<a href="/ponto/add/" class="btn btn-success">Adicionar</a>
 
-<table>
+<hr>
+
+<table class="table table-bordered">
 	<thead>
 		<tr>
 			<th>#</th>
@@ -21,9 +23,9 @@
 				<td>{{ponto.latitude}}</td>
 				<td>{{ponto.longitude}}</td>
 				<td>{{ponto.rio}}</td>
-				<td>
-					<a href="/ponto/edit/{{ponto.id}}/">Editar</a>
-					<a href="/ponto/delete/{{ponto.id}}/">Excluir</a>
+				<td style="width: 152px;">
+					<a href="/ponto/edit/{{ponto.id}}/" class="btn btn-info">Editar</a>
+					<a href="/ponto/delete/{{ponto.id}}/" class="btn btn-danger">Excluir</a>
 				</td>
 			</tr>
 		{% endfor %}

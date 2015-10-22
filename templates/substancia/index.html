@@ -2,13 +2,16 @@
 
 {% block content %}
 
-<a href="/substancia/add/">Adicionar</a>
+<a href="/substancia/add/" class="btn btn-success">Adicionar</a>
 
-<table>
+<hr>
+
+<table class="table table-bordered">
 	<thead>
 		<tr>
 			<th>#</th>
 			<th>Nome</th>
+			<th>Ações</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -16,9 +19,9 @@
 			<tr>
 				<td>{{dado.id}}</td>
 				<td>{{dado.nome}}</td>
-				<td>
-					<a href="/substancia/edit/{{dado.id}}/">Editar</a>
-					<a href="/substancia/delete/{{dado.id}}/">Excluir</a>
+				<td style="width: 152px;">
+					<a href="/substancia/edit/{{dado.id}}/" class="btn btn-info">Editar</a>
+					<a href="/substancia/delete/{{dado.id}}/" class="btn btn-danger">Excluir</a>
 				</td>
 			</tr>
 		{% endfor %}

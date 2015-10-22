@@ -5,14 +5,9 @@ from apptcc.forms.coleta import FormColeta
 from django.shortcuts import render, redirect
 
 def listar(request):
-
-	p = Ponto_Monitoramento()
 	
 	coletas = Coleta.objects.all()
-
-	return render(request, 'coleta/index.html', {
-		'dados': coletas
-	})
+	return render(request, 'coleta/index.html', {'dados': coletas})
 
 
 def add(request):
@@ -49,7 +44,8 @@ def add(request):
 		form = FormColeta()
 
 	return render(request, 'coleta/add.html', {
-		'form': form
+		'form': form,
+		'substancias': Substancia.objects.all()
 	})
 
 

@@ -2,9 +2,11 @@
 
 {% block content %}
 
-<a href="/coleta/add/">Adicionar</a>
+<a href="/coleta/add/" class="btn btn-success">Adicionar</a>
 
-<table>
+<hr>
+
+<table class="table table-bordered">
 	<thead>
 		<tr>
 			<th>#</th>
@@ -22,8 +24,8 @@
 				<td>{{dado.substancia}}</td>
 				<td>{{dado.valor_coletado}}</td>
 				<td>
-					<a href="/coleta/edit/{{dado.id}}/">Editar</a>
-					<a href="/coleta/delete/{{dado.id}}/">Excluir</a>
+					<a href="/coleta/edit/{{dado.id}}/" class="btn btn-info">Editar</a>
+					<a href="/coleta/delete/{{dado.id}}/" class="btn btn-danger">Excluir</a>
 				</td>
 			</tr>
 		{% endfor %}

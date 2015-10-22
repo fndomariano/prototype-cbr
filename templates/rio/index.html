@@ -2,9 +2,11 @@
 
 {% block content %}
 
-<a href="/rio/add/">Adicionar</a>
+<a href="/rio/add/" class="btn btn-success">Adicionar</a>
 
-<table>
+<hr>
+
+<table class="table table-bordered">
 	<thead>
 		<tr>
 			<th>#</th>
@@ -21,9 +23,9 @@
 				<td>{{rio.nome}}</td>
 				<td>{{rio.dimensao}}</td>
 				<td>{{rio.bacia_hidrografica}}</td>
-				<td>
-					<a href="/rio/edit/{{rio.id}}/">Editar</a>
-					<a href="/rio/delete/{{rio.id}}/">Excluir</a>
+				<td style="width: 152px;">
+					<a href="/rio/edit/{{rio.id}}/" class="btn btn-info">Editar</a>
+					<a href="/rio/delete/{{rio.id}}/" class="btn btn-danger">Excluir</a>
 				</td>
 			</tr>
 		{% endfor %}

@@ -15,10 +15,11 @@ def add(request):
 		form = FormRegra(request.POST)
 		if form.is_valid():
 			regra = Regras()
-			regra.monitoramento = Monitoramento.objects.get(pk=request.POST['monitoramento'])
-			regra.entorno = Entorno.objects.get(pk=request.POST['entorno'])
-			regra.risco = request.POST['risco']
-			regra.solucao_sugerida = request.POST['solucao_sugerida']
+			regra.classificacao_iap = request.POST['iap']
+			regra.classificacao_iva = request.POST['iva']
+			regra.entorno           = Entorno.objects.get(pk=request.POST['entorno'])
+			regra.risco             = request.POST['risco']
+			regra.solucao_sugerida  = request.POST['solucao_sugerida']
 			regra.save()
 			return redirect('/regra/')
 	else:
@@ -31,15 +32,17 @@ def edit(request, regra_id):
 	if request.method == 'POST':
 		form = FormRegra(request.POST)
 		if form.is_valid():
-			regra.monitoramento = Monitoramento.objects.get(pk=request.POST['monitoramento'])
-			regra.entorno = Entorno.objects.get(pk=request.POST['entorno'])
-			regra.risco = request.POST['risco']
-			regra.solucao_sugerida = request.POST['solucao_sugerida']
+			regra.classificacao_iap = request.POST['iap']
+			regra.classificacao_iva = request.POST['iva']
+			regra.entorno           = Entorno.objects.get(pk=request.POST['entorno'])
+			regra.risco             = request.POST['risco']
+			regra.solucao_sugerida  = request.POST['solucao_sugerida']
 			regra.save()
 			return redirect('/regra/')
 	else:
 		data = {
-			'monitoramento': regra.monitoramento,
+			'iap': regra.classificacao_iap,
+			'iva': regra.classificacao_iva,
 			'risco': regra.risco,
 			'entorno': regra.entorno,
 			'solucao_sugerida': regra.solucao_sugerida
@@ -60,24 +63,22 @@ def delete(request, regra_id):
 
 def pesquisar(request):
 
-	iap     = request.GET.get('iap')
-	iva     = request.GET.get('iva')
-	risco   = request.GET.get('risco')
+	monitoramento = request.GET.get('monitoramento')
 	entorno = request.GET.get('entorno')
 
 	form = FormPesquisa()
 
 	resultado = []
+	if monitoramento is not None and entorno is not None:
+		
+		sql = '''SELECT r.id, r.solucao_sugerida, r.risco FROM apptcc_regras r
+			INNER JOIN apptcc_entorno e on e.id = r.entorno_id WHERE e.id = %d 
+			AND r.classificacao_iap = (SELECT classificacao_iap FROM apptcc_monitoramento WHERE id = %d)
+ 			AND r.classificacao_iva = (SELECT classificacao_iva FROM apptcc_monitoramento WHERE id = %d)
+ 			''' %(int(entorno), int(monitoramento), int(monitoramento))
 
-	if iap is not None and iva is not None and entorno is not None and risco is not None:
-		resultado = Regras.objects.raw(
-			''' SELECT r.id, r.solucao_sugerida FROM apptcc_regras r
-				INNER JOIN apptcc_monitoramento m ON m.id = r.monitoramento_id
-				INNER JOIN apptcc_entorno e ON e.id = r.entorno_id
-				WHERE m.classificacao_iap = '%s' AND m.classificacao_iva = '%s'
-				AND r.risco = '%s' AND e.id = %d ''' %(iap, iva, risco, int(entorno))
-		)
-
+		resultado = Regras.objects.raw(sql)
+		
 	return render(request, 'regra/pesquisar.html', {
 		'form': form,
 		'resultado': list(resultado)

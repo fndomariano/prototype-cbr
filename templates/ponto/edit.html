@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<form action="/ponto/edit/{{ponto_id}}/" method="post">
+	<form class="form-horizontal" role="form" action="/ponto/edit/{{ponto_id}}/" method="post">
 		{% csrf_token %}
 		{{ form.as_p }}
 		<p>

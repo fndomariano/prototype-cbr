@@ -2,9 +2,12 @@
 
 {% block content %}
 
-<a href="/regra/add/">Adicionar</a> - <a href="/regra/pesquisar/">Pesquisar Solução</a>
+<a href="/regra/add/" class="btn btn-success">Adicionar</a> - 
+<a href="/regra/pesquisar/" class="btn btn-info">Pesquisar Solução</a>
 
-<table>
+<hr>
+
+<table class="table table-bordered">
 	<thead>
 		<tr>
 			<th>#</th>
@@ -19,8 +22,8 @@
 		{% for dado in dados %}
 			<tr>
 				<td>{{dado.id}}</td>
-				<td>{{dado.monitoramento.classificacao_iap}}</td>
-				<td>{{dado.monitoramento.classificacao_iva}}</td>
+				<td>{{dado.classificacao_iap}}</td>
+				<td>{{dado.classificacao_iva}}</td>
 				<td>{{dado.entorno}}</td>
 				<td>
 					{% if dado.risco == 'A' %}
@@ -33,9 +36,9 @@
 						{% endif %}
 					{% endif %}
 				</td>
-				<td>
-					<a href="/regra/edit/{{dado.id}}/">Editar</a>
-					<a href="/regra/delete/{{dado.id}}/">Excluir</a>
+				<td style="width: 152px;">
+					<a href="/regra/edit/{{dado.id}}/" class="btn btn-info">Editar</a>
+					<a href="/regra/delete/{{dado.id}}/" class="btn btn-danger">Excluir</a>
 				</td>
 			</tr>
 		{% endfor %}

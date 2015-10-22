@@ -1,16 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<form action="/regra/pesquisar/" method="get">
+	<form action="/regra/pesquisar/" method="get" class="form-horizontal" role="form">
 		{% csrf_token %}
-		{{form.as_p}}
-		<p>
-			<button type="submit">Pesquisar</button>
-		</p>
+		<div class="form-group">
+			<label for="nome" class="col-sm-2 control-label">Monitoramento: </label>
+			<div class="col-sm-8">
+				{{ form.monitoramento.errors }}
+				{{ form.monitoramento }}
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="nome" class="col-sm-2 control-label">Entorno: </label>
+			<div class="col-sm-8">
+				{{ form.entorno.errors }}
+				{{ form.entorno }}
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-4 pull-right">
+				<button type="submit" class="btn btn-info">Pesquisar Solução</button>
+			</div>
+		</div>
 	</form>
 	
 	{% if resultado %}
-		<b>Solução: </b> {{ resultado.0 }}
+		<table class="table table-bordered">
+			<tr>
+				<th>Risco</th>
+				<th>Solução</th>
+			</tr>
+			<tr>
+				<td>
+					{% if resultado.0.risco == 'A' %}
+						Alto
+					{% else %}
+						{% if resultado.0.risco == 'M' %}
+							Médio
+						{% else %}
+							Baixo
+						{% endif %}
+					{% endif %}
+				</td>
+				<td>{{ resultado.0 }}</td>				
+			</tr>
+		</table>
 	{% else %}
 		Não foi encontrada nenhuma solução - <a href="/regra/add/">Clique aqui para cadastrar.</a> 
 	{% endif %}

@@ -357,28 +357,28 @@ class Monitoramento(models.Model):
 
 	def get_classificacao_iap(self):
 		valor_iap = self._calcula_iqa() * self._calcula_isto()
-			
+	
 		if valor_iap <= 19: 
 			return "pessima"
-		elif valor_iap >= 20 or valor_iap <= 36:
+		elif valor_iap >= 20 and valor_iap <= 36:
 			return "ruim" 
-		elif valor_iap >= 37 or valor_iap <= 51:
+		elif valor_iap >= 37 and valor_iap <= 51:
 			return "regular"
-		elif valor_iap >= 52 or valor_iap <= 79:
+		elif valor_iap >= 52 and valor_iap <= 79:
 			return "boa"
 		else:
 			return "otima"
 
 	def get_classificacao_iva(self):
 		valor_iva = self._calcula_iva()
-		
+
 		if valor_iva <= 2.5: 
 			return "otima"
-		elif valor_iva > 2.6 or valor_iva <= 3.3:
+		elif valor_iva > 2.6 and valor_iva <= 3.3:
 			return "boa" 
-		elif valor_iva > 3.4 or valor_iva <= 4.5:
+		elif valor_iva > 3.4 and valor_iva <= 4.5:
 			return "regular"
-		elif valor_iva > 4.6 or valor_iva <= 6.7:
+		elif valor_iva > 4.5 and valor_iva <= 6.7:
 			return "ruim"
 		else:
 			return "pessima"
@@ -388,10 +388,11 @@ class Monitoramento(models.Model):
 
 
 class Regras(models.Model):
+	classificacao_iap = models.CharField(max_length=45)
+	classificacao_iva = models.CharField(max_length=45)
 	risco             = models.CharField(max_length=1)
 	solucao_sugerida  = models.TextField()
 	entorno           = models.ForeignKey(Entorno)
-	monitoramento     = models.ForeignKey(Monitoramento)
 	
 	def __unicode__(self):
 		return self.solucao_sugerida

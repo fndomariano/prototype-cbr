@@ -52,7 +52,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'tcc.urls'
 
-print os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

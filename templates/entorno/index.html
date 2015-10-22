@@ -2,9 +2,11 @@
 
 {% block content %}
 
-<a href="/entorno/add/">Adicionar</a>
+<a href="/entorno/add/" class="btn btn-success">Adicionar</a>
 
-<table>
+<hr>
+
+<table class="table table-bordered">
 	<thead>
 		<tr>
 			<th>#</th>
@@ -17,9 +19,9 @@
 			<tr>
 				<td>{{dado.id}}</td>
 				<td>{{dado.variavel_entorno}}</td>
-				<td>
-					<a href="/entorno/edit/{{dado.id}}/">Editar</a>
-					<a href="/entorno/delete/{{dado.id}}/">Excluir</a>
+				<td style="width: 152px;">
+					<a href="/entorno/edit/{{dado.id}}/" class="btn btn-info">Editar</a>
+					<a href="/entorno/delete/{{dado.id}}/"class="btn btn-danger">Excluir</a>
 				</td>
 			</tr>
 		{% endfor %}

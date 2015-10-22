@@ -8,24 +8,21 @@ class FormColeta(forms.Form):
 
 	data_coleta = forms.DateField(
 		widget = forms.DateInput(
-			attrs={'type':'date'}		
+			attrs={'type':'date', 'class':'form-control'}		
 		)
 	)
 
 	ponto = forms.ModelChoiceField(
-		widget = forms.Select(), 
+		widget = forms.Select(
+			attrs={'class': 'form-control'}
+		), 
 		queryset = Ponto_Monitoramento.objects.all(),
 		empty_label = "Selecione o ponto"
 	)
-
-	substancia = forms.ModelChoiceField(
-		widget = forms.Select(),
-		queryset = Substancia.objects.all().order_by('nome'),
-		empty_label = "Selecione a substancia"
-	)
+	
 
 	valor_coletado = forms.FloatField(
 		widget = forms.TextInput(
-			attrs = {'placeholder': 'Digite o valor coletado'}
+			attrs = {'placeholder': 'Digite o valor coletado', 'class': 'form-control'}
 		)
 	)

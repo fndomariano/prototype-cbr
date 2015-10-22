@@ -11,9 +11,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='substancia',
-            name='grupo',
-            field=models.CharField(max_length=45, null=True),
+        migrations.RemoveField(
+            model_name='regras',
+            name='monitoramento',
         ),
     ]
