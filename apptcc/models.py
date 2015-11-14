@@ -62,6 +62,7 @@ class Monitoramento(models.Model):
 	ponto_monitoramento = models.ForeignKey(Ponto_Monitoramento)
 	classificacao_iap   = models.CharField(max_length=45, null=True)
 	classificacao_iva   = models.CharField(max_length=45, null=True)
+	solucao_sugerida    = models.TextField(null=True)
 
 	def _get_valor_coletado_substancia(self, nome_substancia):
 		sql = ''' SELECT m.id, s.nome, c.valor_coletado FROM apptcc_monitoramento m

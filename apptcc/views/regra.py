@@ -63,27 +63,40 @@ def delete(request, regra_id):
 
 def pesquisar(request):
 
-	monitoramento = request.GET.get('monitoramento')
-	entorno = request.GET.get('entorno')
-
-	form = FormPesquisa()
-
 	resultado = []
-	if monitoramento is not None and entorno is not None:
-		
-		sql = '''SELECT r.id, r.solucao_sugerida, r.risco FROM apptcc_regras r
-			INNER JOIN apptcc_entorno e on e.id = r.entorno_id WHERE e.id = %d 
-			AND r.classificacao_iap = (SELECT classificacao_iap FROM apptcc_monitoramento WHERE id = %d)
- 			AND r.classificacao_iva = (SELECT classificacao_iva FROM apptcc_monitoramento WHERE id = %d)
- 			''' %(int(entorno), int(monitoramento), int(monitoramento))
+	montioramento = ''
 
-		resultado = Regras.objects.raw(sql)
+	if request.method == 'GET':
+		monitoramento = request.GET.get('monitoramento')
+		entorno = request.GET.get('entorno')
+
+		form = FormPesquisa()
+
+		if monitoramento is not None and entorno is not None:
+			
+			sql = '''SELECT r.id, r.solucao_sugerida, r.risco FROM apptcc_regras r
+				INNER JOIN apptcc_entorno e on e.id = r.entorno_id WHERE e.id = %d 
+				AND r.classificacao_iap = (SELECT classificacao_iap FROM apptcc_monitoramento WHERE id = %d)
+	 			AND r.classificacao_iva = (SELECT classificacao_iva FROM apptcc_monitoramento WHERE id = %d)
+	 			''' %(int(entorno), int(monitoramento), int(monitoramento))
+
+			resultado = list(Regras.objects.raw(sql))
+			resultado.append(monitoramento)
 		
 	return render(request, 'regra/pesquisar.html', {
 		'form': form,
-		'resultado': list(resultado)
+		'resultado': resultado
 	})
 
 
+def utilizar_solucao(request, regra_id, monitoramento_id):
+
+	regra         = Regras.objects.get(pk=regra_id)
+	monitoramento = Monitoramento.objects.get(pk=monitoramento_id)
+
+	monitoramento.solucao_sugerida = regra.solucao_sugerida
+	monitoramento.save()
+
+	return redirect('/regra/pesquisar/')
 
 

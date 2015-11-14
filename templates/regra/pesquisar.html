@@ -29,6 +29,7 @@
 			<tr>
 				<th>Risco</th>
 				<th>Solução</th>
+				<th>Utilizar solução</th>
 			</tr>
 			<tr>
 				<td>
@@ -43,6 +44,11 @@
 					{% endif %}
 				</td>
 				<td>{{ resultado.0 }}</td>				
+				<td>
+					<a href="/regra/utilizar-solucao/{{resultado.0.id}}/{{resultado.1}}/" class="btn btn-success">
+						<i class="glyphicon glyphicon-thumbs-up"></i>
+					</a>						
+				</td>
 			</tr>
 		</table>
 	{% else %}

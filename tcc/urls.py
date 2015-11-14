@@ -64,5 +64,6 @@ urlpatterns = [
     url(r'^regra/edit/(?P<regra_id>\d+)/$', regra.edit),
     url(r'^regra/delete/(?P<regra_id>\d+)/$', regra.delete),
     url(r'^regra/pesquisar/$', regra.pesquisar),
+    url(r'^regra/utilizar-solucao/(?P<regra_id>\d+)/(?P<monitoramento_id>\d+)/$', regra.utilizar_solucao),
 
 ]
