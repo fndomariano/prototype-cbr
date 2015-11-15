@@ -23,6 +23,6 @@ class FormColeta(forms.Form):
 
 	valor_coletado = forms.FloatField(
 		widget = forms.TextInput(
-			attrs = {'placeholder': 'Digite o valor coletado', 'class': 'form-control'}
+			attrs = {'class': 'form-control'}
 		)
 	)

@@ -13,8 +13,8 @@
 		</div>
 		
 		<div class="form-group">
-			<label for="ponto" class="col-sm-2 control-label">Data da coleta: </label>
-			<div class="col-sm-8">
+			<label for="ponto" class="col-sm-3 control-label">Ponto Monitoramento: </label>
+			<div class="col-sm-7">
 				{{ form.ponto.errors }}
 				{{ form.ponto }}	
 			</div>
@@ -24,7 +24,7 @@
 			{% for s in substancias %}
 				<label for="data_coleta" class="col-sm-4 control-label">{{s.nome}}</label>	
 				<input name="substancia" type="hidden" readonly="readonly" value="{{ s.id }}">
-				<div class="col-md-5">					
+				<div class="col-md-1">					
 					{{ form.valor_coletado }} 
 				</div>
 			{% endfor %}
