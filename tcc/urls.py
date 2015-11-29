@@ -23,7 +23,7 @@ import apptcc.views.home as home
 import apptcc.views.substancia as substancia
 import apptcc.views.coleta as coleta
 import apptcc.views.entorno as entorno
-import apptcc.views.regra as regra
+import apptcc.views.caso as caso
 
 
 urlpatterns = [
@@ -59,11 +59,11 @@ urlpatterns = [
     url(r'^entorno/edit/(?P<entorno_id>\d+)/$', entorno.edit),
     url(r'^entorno/delete/(?P<entorno_id>\d+)/$', entorno.delete),
 
-    url(r'^regra/$', regra.listar),
-    url(r'^regra/add/$', regra.add),
-    url(r'^regra/edit/(?P<regra_id>\d+)/$', regra.edit),
-    url(r'^regra/delete/(?P<regra_id>\d+)/$', regra.delete),
-    url(r'^regra/pesquisar/$', regra.pesquisar),
-    url(r'^regra/utilizar-solucao/(?P<regra_id>\d+)/(?P<monitoramento_id>\d+)/$', regra.utilizar_solucao),
+    url(r'^caso/$', caso.listar),
+    url(r'^caso/add/$', caso.add),
+    url(r'^caso/edit/(?P<caso_id>\d+)/$', caso.edit),
+    url(r'^caso/delete/(?P<caso_id>\d+)/$', caso.delete),
+    url(r'^caso/pesquisar/$', caso.pesquisar),
+    url(r'^caso/utilizar-solucao/(?P<caso_id>\d+)/(?P<monitoramento_id>\d+)/$', caso.utilizar_solucao),
 
 ]

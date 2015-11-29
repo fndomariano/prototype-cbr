@@ -63,6 +63,7 @@ class Monitoramento(models.Model):
 	classificacao_iap   = models.CharField(max_length=45, null=True)
 	classificacao_iva   = models.CharField(max_length=45, null=True)
 	solucao_sugerida    = models.TextField(null=True)
+	risco               = models.CharField(max_length=1, null=True)
 
 	def _get_valor_coletado_substancia(self, nome_substancia):
 		sql = ''' SELECT m.id, s.nome, c.valor_coletado FROM apptcc_monitoramento m
@@ -356,8 +357,11 @@ class Monitoramento(models.Model):
 	def _calcula_iva(self):
 		return (1.2 * self._calcula_ipmca()) + self._calcula_iet()
 
+	def _calcula_iap(self):
+		return self._calcula_iqa() * self._calcula_isto()
+
 	def get_classificacao_iap(self):
-		valor_iap = self._calcula_iqa() * self._calcula_isto()
+		valor_iap = self._calcula_iap()
 	
 		if valor_iap <= 19: 
 			return "pessima"
@@ -388,7 +392,7 @@ class Monitoramento(models.Model):
 		return unicode(self.data_monitoramento) + ' | ('+str(self.ponto_monitoramento.latitude) + ', ' +str(self.ponto_monitoramento.longitude) + ') | ' + 'IAP: ' + self.classificacao_iap + ' - ' + 'IVA:' + self.classificacao_iva
 
 
-class Regras(models.Model):
+class Casos(models.Model):
 	classificacao_iap = models.CharField(max_length=45)
 	classificacao_iva = models.CharField(max_length=45)
 	risco             = models.CharField(max_length=1)

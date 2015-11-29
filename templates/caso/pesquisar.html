@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<form action="/regra/pesquisar/" method="get" class="form-horizontal" role="form">
+	<form action="/caso/pesquisar/" method="get" class="form-horizontal" role="form">
 		{% csrf_token %}
 		<div class="form-group">
 			<label for="nome" class="col-sm-2 control-label">Monitoramento: </label>
@@ -24,7 +24,7 @@
 		</div>
 	</form>
 	
-	{% if resultado %}
+	{% if resultado.solucao  %}
 		<table class="table table-bordered">
 			<tr>
 				<th>Risco</th>
@@ -43,9 +43,9 @@
 						{% endif %}
 					{% endif %}
 				</td>
-				<td>{{ resultado.0 }}</td>				
+				<td>{{ resultado.solucao.0.solucao_sugerida }}</td>				
 				<td>
-					<a href="/regra/utilizar-solucao/{{resultado.0.id}}/{{resultado.1}}/" class="btn btn-success">
+					<a href="/caso/utilizar-solucao/{{resultado.solucao.0.id}}/{{resultado.monitoramento}}/" class="btn btn-success">
 						<i class="glyphicon glyphicon-thumbs-up"></i>
 					</a>						
 				</td>

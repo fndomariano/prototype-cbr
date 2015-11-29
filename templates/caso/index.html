@@ -2,8 +2,8 @@
 
 {% block content %}
 
-<a href="/regra/add/" class="btn btn-success">Adicionar</a> - 
-<a href="/regra/pesquisar/" class="btn btn-info">Pesquisar Solução</a>
+<a href="/caso/add/" class="btn btn-success">Adicionar</a> - 
+<a href="/caso/pesquisar/" class="btn btn-info">Pesquisar Solução</a>
 
 <hr>
 
@@ -37,8 +37,8 @@
 					{% endif %}
 				</td>
 				<td style="width: 152px;">
-					<a href="/regra/edit/{{dado.id}}/" class="btn btn-info">Editar</a>
-					<a href="/regra/delete/{{dado.id}}/" class="btn btn-danger">Excluir</a>
+					<a href="/caso/edit/{{dado.id}}/" class="btn btn-info">Editar</a>
+					<a href="/caso/delete/{{dado.id}}/" class="btn btn-danger">Excluir</a>
 				</td>
 			</tr>
 		{% endfor %}

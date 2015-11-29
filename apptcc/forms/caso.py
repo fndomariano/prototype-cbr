@@ -3,7 +3,7 @@
 from apptcc.models import Entorno, Monitoramento
 from django import forms
 
-class FormRegra(forms.Form):
+class FormCaso(forms.Form):
 	
 	classificacoes = (
 		('otima', 'Ótima'), 
