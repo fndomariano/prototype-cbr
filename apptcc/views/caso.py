@@ -6,13 +6,13 @@ from apptcc.forms.pesquisa import FormPesquisa
 from django.shortcuts import render, redirect
 
 def listar(request):
-	casos = Casos.objects.all()
+	casos = Casos.objects.order_by('classificacao_iap', 'classificacao_iva', 'entorno', 'risco').all()
 	return render(request, 'caso/index.html', {'dados':casos})
 
 
 def add(request):
 	if request.method == 'POST':
-		form = FormRegra(request.POST)
+		form = FormCaso(request.POST)
 		if form.is_valid():
 			caso = Casos()
 			caso.classificacao_iap = request.POST['iap']
@@ -23,14 +23,14 @@ def add(request):
 			caso.save()
 			return redirect('/caso/')
 	else:
-		form = FormRegra()
+		form = FormCaso()
 	return render(request, 'caso/add.html', {'form': form})
 
 
 def edit(request, caso_id):
-	caso = Caso.objects.get(pk=caso_id)
+	caso = Casos.objects.get(pk=caso_id)
 	if request.method == 'POST':
-		form = FormRegra(request.POST)
+		form = FormCaso(request.POST)
 		if form.is_valid():
 			caso.classificacao_iap = request.POST['iap']
 			caso.classificacao_iva = request.POST['iva']
@@ -47,7 +47,7 @@ def edit(request, caso_id):
 			'entorno': caso.entorno,
 			'solucao_sugerida': caso.solucao_sugerida
 		}
-		form = FormRegra(initial=data)
+		form = FormCaso(initial=data)
 
 	return render(request, 'caso/edit.html', {
 		'form': form,
@@ -66,11 +66,11 @@ def pesquisar(request):
 	resultado = {}
 	montioramento = ''
 
+	form = FormPesquisa()
+
 	if request.method == 'GET':
 		monitoramento = request.GET.get('monitoramento')
 		entorno = request.GET.get('entorno')
-
-		form = FormPesquisa()
 
 		if monitoramento is not None and entorno is not None:
 			
@@ -83,22 +83,18 @@ def pesquisar(request):
 			resultado['solucao'] = list(Casos.objects.raw(sql))
 			resultado['monitoramento'] = monitoramento
 
-	return render(request, 'caso/pesquisar.html', {
-		'form': form,
-		'resultado': resultado
-	})
+			return render(request, 'caso/resultado.html', {'resultado': resultado})
+	
+	return render(request, 'caso/pesquisar.html', {'form': form})
 
 
 def utilizar_solucao(request, caso_id, monitoramento_id):
 
-	caso         = Casos.objects.get(pk=caso_id)
-	
-	print caso.risco
-
+	caso          = Casos.objects.get(pk=caso_id)
 	monitoramento = Monitoramento.objects.get(pk=monitoramento_id)
 	monitoramento.solucao_sugerida = caso.solucao_sugerida
-	monitoramento.risco = caso.risco
-	# monitoramento.save()
+	monitoramento.risco            = caso.risco
+	monitoramento.save()
 
 	return redirect('/caso/pesquisar/')
 

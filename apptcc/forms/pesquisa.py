@@ -9,7 +9,7 @@ class FormPesquisa(forms.Form):
 		widget = forms.Select(
 			attrs = {'class': 'form-control'}
 		), 
-		queryset = Monitoramento.objects.all(),
+		queryset = Monitoramento.objects.order_by('ponto_monitoramento', 'data_monitoramento').all(),
 		empty_label = "Selecione uma data de monitoramento"
 	)
 

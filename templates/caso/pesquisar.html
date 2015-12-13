@@ -22,39 +22,5 @@
 				<button type="submit" class="btn btn-info">Pesquisar Solução</button>
 			</div>
 		</div>
-	</form>
-	
-	{% if resultado.solucao  %}
-		<table class="table table-bordered">
-			<tr>
-				<th>Risco</th>
-				<th>Solução</th>
-				<th>Utilizar solução</th>
-			</tr>
-			<tr>
-				<td>
-					{% if resultado.0.risco == 'A' %}
-						Alto
-					{% else %}
-						{% if resultado.0.risco == 'M' %}
-							Médio
-						{% else %}
-							Baixo
-						{% endif %}
-					{% endif %}
-				</td>
-				<td>{{ resultado.solucao.0.solucao_sugerida }}</td>				
-				<td>
-					<a href="/caso/utilizar-solucao/{{resultado.solucao.0.id}}/{{resultado.monitoramento}}/" class="btn btn-success">
-						<i class="glyphicon glyphicon-thumbs-up"></i>
-					</a>						
-				</td>
-			</tr>
-		</table>
-	{% else %}
-		Não foi encontrada nenhuma solução - <a href="/regra/add/">Clique aqui para cadastrar.</a> 
-	{% endif %}
-
-		
-	
+	</form>	
 {% endblock %}
