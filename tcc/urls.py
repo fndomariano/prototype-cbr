@@ -50,8 +50,7 @@ urlpatterns = [
     url(r'^substancia/delete/(?P<substancia_id>\d+)/$', substancia.delete),
 
     url(r'^coleta/$', coleta.listar),
-    url(r'^coleta/add/$', coleta.add),
-    url(r'^coleta/edit/(?P<coleta_id>\d+)/$', coleta.edit),
+    url(r'^coleta/add/$', coleta.add),    
     url(r'^coleta/delete/(?P<coleta_id>\d+)/$', coleta.delete),
 
     url(r'^entorno/$', entorno.listar),

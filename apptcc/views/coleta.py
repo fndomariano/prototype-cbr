@@ -49,30 +49,6 @@ def add(request):
 	})
 
 
-def edit(request, coleta_id):
-
-	coleta = Coleta.objects.get(pk=coleta_id)
-
-	if request.method == 'POST':
-		form = FormColeta(request.POST)
-
-		if form.is_valid():
-			pass
-	else:
-		data = {
-			'valor_coletado': coleta.valor_coletado,
-			'substancia': coleta.substancia.all(),
-			'ponto': coleta.ponto
-		}
-
-		form = FormColeta(initial=data)
-
-	return render(request, 'coleta/edit.html', {
-		'form': form,
-		'coleta_id': coleta.id
-	})
-
-
 def delete(request, coleta_id):
 
 	coleta = Coleta.objects.get(pk=coleta_id)

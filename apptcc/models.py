@@ -72,7 +72,7 @@ class Monitoramento(models.Model):
 			INNER JOIN apptcc_substancia s ON s.id = c.substancia_id
 			WHERE s.nome = '%s' AND m.data_monitoramento = '%s' 
 			AND c.ponto_monitoramento_id = %d ''' %(nome_substancia, self.data_monitoramento, int(self.ponto_monitoramento.id))
-
+	
 		substancia = Monitoramento.objects.raw(sql)
 		substancia = list(substancia)
 		valor_coletado_da_substancia = substancia[0].valor_coletado

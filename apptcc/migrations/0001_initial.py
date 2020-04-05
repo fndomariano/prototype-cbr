@@ -56,8 +56,7 @@ class Migration(migrations.Migration):
                 ('classificacao_iva', models.CharField(max_length=45)),
                 ('risco', models.CharField(max_length=1)),
                 ('solucao_sugerida', models.TextField()),
-                ('entorno', models.ForeignKey(to='apptcc.Entorno', on_delete=models.CASCADE)),
-                ('monitoramento', models.ForeignKey(to='apptcc.Monitoramento', on_delete=models.CASCADE)),
+                ('entorno', models.ForeignKey(to='apptcc.Entorno', on_delete=models.CASCADE)),                
             ],
         ),
         migrations.CreateModel(
