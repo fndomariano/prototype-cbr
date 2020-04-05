@@ -45,9 +45,6 @@ urlpatterns = [
     url(r'^ponto/delete/(?P<ponto_id>\d+)/$', ponto.delete),
 
     url(r'^substancia/$', substancia.listar),
-    url(r'^substancia/add/$', substancia.add),
-    url(r'^substancia/edit/(?P<substancia_id>\d+)/$', substancia.edit),
-    url(r'^substancia/delete/(?P<substancia_id>\d+)/$', substancia.delete),
 
     url(r'^coleta/$', coleta.listar),
     url(r'^coleta/add/$', coleta.add),    
