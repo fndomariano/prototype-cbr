@@ -72,7 +72,7 @@ class Monitoramento(models.Model):
 			INNER JOIN apptcc_substancia s ON s.id = c.substancia_id
 			WHERE s.nome = '%s' AND m.data_monitoramento = '%s' 
 			AND c.ponto_monitoramento_id = %d ''' %(nome_substancia, self.data_monitoramento, int(self.ponto_monitoramento.id))
-	
+
 		substancia = Monitoramento.objects.raw(sql)
 		substancia = list(substancia)
 		valor_coletado_da_substancia = substancia[0].valor_coletado
@@ -247,21 +247,29 @@ class Monitoramento(models.Model):
 
 	def _get_media_tres_maiores_ponderacoes(self):
 		substancias = self._get_valores_st_ipmca()
-		maximo1, maximo2, maximo3 = substancias.values(), substancias.values(), substancias.values()
+		
+		maximo1, maximo2, maximo3 = list(substancias.values()), list(substancias.values()), list(substancias.values())
+
 		maximo1 = max(maximo1)
+
 		maximo2.remove(maximo1)
 		maximo2 = max(maximo2)
+
 		maximo3.remove(maximo1)
 		maximo3.remove(maximo2)
 		maximo3 = max(maximo3)
+
 		return (float(maximo1) + float(maximo2) + float(maximo3)) / 3 
 
 	def _get_multipliacao_minimos_st(self):
 		st = self._get_valores_st_isto()
-		minimo1 = min(st.values())
-		minimo2 = st.values()
+		
+		minimo1 = min(list(st.values()))
+		minimo2 = list(st.values())
+
 		minimo2.remove(minimo1)
 		minimo2 = min(minimo2)
+
 		return minimo1 * minimo2
 
 	def _get_avg_so(self):
@@ -388,8 +396,8 @@ class Monitoramento(models.Model):
 		else:
 			return "pessima"
 
-	def __unicode__(self):
-		return unicode(self.data_monitoramento) + ' | ('+str(self.ponto_monitoramento.latitude) + ', ' +str(self.ponto_monitoramento.longitude) + ') | ' + 'IAP: ' + self.classificacao_iap + ' - ' + 'IVA:' + self.classificacao_iva
+	def __str__(self):
+		return "%s | (%s, %s) | IAP: %s - IVA %s" %(self.data_monitoramento, self.ponto_monitoramento.latitude, self.ponto_monitoramento.longitude, self.classificacao_iap, self.classificacao_iva)
 
 
 class Casos(models.Model):

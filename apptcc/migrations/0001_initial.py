@@ -3,6 +3,21 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 
+from apptcc.models import Substancia
+
+def add_substancias(apps, schema_editor):
+    substancias = [
+        'Oxigenio Dissolvido', 'Coliformes Termotolerantes', 'Potencial Hidrogenico - pH',
+        'DBO 5.20', 'Temperatura da Agua', 'Nitrogenio Total', 'Fosforo Total', 'Residuo Total',
+        'Turbidez', 'Cadmio', 'Cromo Total', 'Cobre Dissolvido', 'Chumbo', 'Mercurio', 'Niquel',
+        'Fenois Totais', 'Surfactantes', 'Zinco', 'PFHTM', 'Numero de Celulas Cianobacterias', 
+        'Ferro Dissolvido', 'Manganes', 'Aluminio Dissolvido', 'Clorofila'
+    ]
+
+    for substancia in substancias:
+        s = Substancia()
+        s.nome = substancia
+        s.save()
 
 class Migration(migrations.Migration):
 
@@ -95,4 +110,5 @@ class Migration(migrations.Migration):
             name='substancia',
             field=models.ForeignKey(to='apptcc.Substancia', on_delete=models.CASCADE),
         ),
+        migrations.RunPython(add_substancias),
     ]
