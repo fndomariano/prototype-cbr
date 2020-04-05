@@ -7,7 +7,7 @@ class Bacia_Hidrografica(models.Model):
 
 	nome = models.CharField(max_length=150)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.nome
 
 
@@ -15,18 +15,18 @@ class Rio(models.Model):
 
 	nome               = models.CharField(max_length=150)
 	dimensao           = models.FloatField()
-	bacia_hidrografica = models.ForeignKey(Bacia_Hidrografica)
+	bacia_hidrografica = models.ForeignKey(Bacia_Hidrografica, on_delete=models.CASCADE)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.nome
 
 class Ponto_Monitoramento(models.Model):
 
 	latitude  = models.FloatField()
 	longitude = models.FloatField()
-	rio       = models.ForeignKey(Rio)
+	rio       = models.ForeignKey(Rio, on_delete=models.CASCADE)
 
-	def __unicode__(self):
+	def __str__(self):
 		return str(self.id) + ' - (' + str(self.latitude) + ', ' + str(self.longitude) + ')'
 
 
@@ -34,14 +34,14 @@ class Substancia(models.Model):
 
 	nome  = models.CharField(max_length=100)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.nome
 
 
 class Coleta(models.Model):
 	id                  = models.AutoField(verbose_name='id', serialize=False, auto_created=True, primary_key=True)
-	ponto_monitoramento = models.ForeignKey(Ponto_Monitoramento)
-	substancia          = models.ForeignKey(Substancia)
+	ponto_monitoramento = models.ForeignKey(Ponto_Monitoramento, on_delete=models.CASCADE)
+	substancia          = models.ForeignKey(Substancia, on_delete=models.CASCADE)
 	valor_coletado      = models.FloatField()
 	
 	def __unicode__(self):
@@ -59,7 +59,7 @@ class Entorno(models.Model):
 class Monitoramento(models.Model):
 
 	data_monitoramento  = models.DateField('Data do Monitoramento')
-	ponto_monitoramento = models.ForeignKey(Ponto_Monitoramento)
+	ponto_monitoramento = models.ForeignKey(Ponto_Monitoramento, on_delete=models.CASCADE)
 	classificacao_iap   = models.CharField(max_length=45, null=True)
 	classificacao_iva   = models.CharField(max_length=45, null=True)
 	solucao_sugerida    = models.TextField(null=True)
@@ -397,7 +397,7 @@ class Casos(models.Model):
 	classificacao_iva = models.CharField(max_length=45)
 	risco             = models.CharField(max_length=1)
 	solucao_sugerida  = models.TextField()
-	entorno           = models.ForeignKey(Entorno)
+	entorno           = models.ForeignKey(Entorno, on_delete=models.CASCADE)
 	
 	def __unicode__(self):
 		return self.solucao_sugerida

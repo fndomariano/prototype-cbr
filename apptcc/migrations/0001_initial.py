@@ -56,8 +56,8 @@ class Migration(migrations.Migration):
                 ('classificacao_iva', models.CharField(max_length=45)),
                 ('risco', models.CharField(max_length=1)),
                 ('solucao_sugerida', models.TextField()),
-                ('entorno', models.ForeignKey(to='apptcc.Entorno')),
-                ('monitoramento', models.ForeignKey(to='apptcc.Monitoramento')),
+                ('entorno', models.ForeignKey(to='apptcc.Entorno', on_delete=models.CASCADE)),
+                ('monitoramento', models.ForeignKey(to='apptcc.Monitoramento', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -66,7 +66,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('nome', models.CharField(max_length=150)),
                 ('dimensao', models.FloatField()),
-                ('bacia_hidrografica', models.ForeignKey(to='apptcc.Bacia_Hidrografica')),
+                ('bacia_hidrografica', models.ForeignKey(to='apptcc.Bacia_Hidrografica', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -79,21 +79,21 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='ponto_monitoramento',
             name='rio',
-            field=models.ForeignKey(to='apptcc.Rio'),
+            field=models.ForeignKey(to='apptcc.Rio', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='monitoramento',
             name='ponto_monitoramento',
-            field=models.ForeignKey(to='apptcc.Ponto_Monitoramento'),
+            field=models.ForeignKey(to='apptcc.Ponto_Monitoramento', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='coleta',
             name='ponto_monitoramento',
-            field=models.ForeignKey(to='apptcc.Ponto_Monitoramento'),
+            field=models.ForeignKey(to='apptcc.Ponto_Monitoramento', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='coleta',
             name='substancia',
-            field=models.ForeignKey(to='apptcc.Substancia'),
+            field=models.ForeignKey(to='apptcc.Substancia', on_delete=models.CASCADE),
         ),
     ]
