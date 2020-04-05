@@ -52,7 +52,7 @@ class Entorno(models.Model):
 
 	variavel_entorno = models.CharField(max_length=45)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.variavel_entorno
 
 
@@ -399,5 +399,5 @@ class Casos(models.Model):
 	solucao_sugerida  = models.TextField()
 	entorno           = models.ForeignKey(Entorno, on_delete=models.CASCADE)
 	
-	def __unicode__(self):
+	def __str__(self):
 		return self.solucao_sugerida
