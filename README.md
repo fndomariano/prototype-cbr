@@ -21,4 +21,4 @@ c) Run migrations
 $ docker-compose exec web python manage.py migrate --noinput
 ```
 
-4) Access ```http://localhost:8080``` 
+d) Access ```http://localhost:8080``` 
